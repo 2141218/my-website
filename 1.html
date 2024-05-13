@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLS Video Player</title>
+    <!-- 引入本地的 HLS.js 和 Video.js 库 -->
+    <link href="D:\1Gfkj\video.js-main\rtmpHLSJs\video-js.css" rel="stylesheet">
+    <script src="D:\1Gfkj\video.js-main\rtmpHLSJs\video.js"></script>
+    <script src="D:\1Gfkj\video.js-main\rtmpHLSJs\hls.js"></script>
+</head>
+<body>
+    <!-- 视频播放器容器 -->
+    <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360">
+        <source src="https://www.gofront.net:4433/my-hls/room8.m3u8" type="application/vnd.apple.mpegurl">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        // 在视频加载完成后初始化 HLS.js
+        var video = document.getElementById('videoPlayer');
+        // 检查 HLS.js 是否已加载
+        if (window.Hls) {
+            var hls = new Hls();
+            hls.loadSource('https://www.gofront.net:4433/my-hls/room8.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = 'https://www.gofront.net:4433/my-hls/room8.m3u8';
+            video.addEventListener('loadedmetadata',function() {
+                video.play();
+            });
+        }
+    </script>
+</body>
+</html>
