@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地图示例</title>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&&type=webgl&ak=t1lGjUphkmiehu5036U8sLcFvYvVbSqp"></script>
+<script type="text/javascript" src="autofit/autofit.js"></script> <!-- 引入本地的 autofit.js -->
+<style>
+#container {
+    width: 100%;
+    height: 500px; /* 高度一定要给 */
+}
+</style>
+</head>
+<body>
+<div id='container'></div>
+
+<script>
+    // 初始化地图
+    function initMap() {
+        var map = new BMapGL.Map("container"); // 创建地图实例
+        var point = new BMapGL.Point(116.404, 39.915); // 创建点坐标
+        map.centerAndZoom(point, 15); // 初始化地图，设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+        map.setHeading(64.5); // 设置地图旋转角度
+        map.setTilt(73); // 设置地图的倾斜角度
+
+        // 创建点标记图标
+        var markerIcon = new BMapGL.Icon("icon.png", new BMapGL.Size(23, 26));
+        // 标记点列表
+        var markerList = [{
+            id: 1,
+            longitude: 116.404,
+            latitude: 39.915,
+            title: "大门",
+            address: "山东省济南市"
+        }, {
+            id: 2,
+            longitude: 116.404,
+            latitude: 39.925,
+            title: "山东博物馆",
+            address: "济南市故宫博物馆"
+        }];
+
+        // 批量添加点标记
+        markerList.forEach(function(item) {
+            var markerPoint = new BMapGL.Point(item.longitude, item.latitude);
+            var marker = new BMapGL.Marker(markerPoint, {
+                icon: markerIcon
+            });
+            map.addOverlay(marker);
+
+            // 创建信息窗口
+            var opts = {
+                width: 200,
+                height: 60,
+                title: item.title
+            };
+            var infoWindow = new BMapGL.InfoWindow('地址：' + item.address, opts);
+            // 点标记添加点击事件
+            marker.addEventListener('click', function() {
+                // 开启信息窗口
+                map.openInfoWindow(infoWindow, markerPoint);
+            });
+        });
+    }
+
+    // 加载地图
+    window.onload = initMap;
+</script>
+</body>
+</html>
