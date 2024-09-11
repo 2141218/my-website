@@ -5,16 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>地图示例</title>
 <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&&type=webgl&ak=t1lGjUphkmiehu5036U8sLcFvYvVbSqp"></script>
-<script type="text/javascript" src="autofit.js/autofit.js"></script> <!-- 引入本地的 autofit.js -->
+<script type="text/javascript" src="autofit/autofit.js"></script> <!-- 引入本地的 autofit.js -->
 <style>
+#map-container {
+    width: 80%; /* 设置宽度 */
+    max-width: 800px; /* 最大宽度 */
+    height: 500px; /* 高度 */
+    border: 2px solid #333; /* 边框样式 */
+    margin: 20px auto; /* 自动水平居中，并且上方和下方有20px的间距 */
+    padding: 10px; /* 内边距 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* 阴影效果 */
+    position: relative; /* 使子元素可以绝对定位 */
+}
 #container {
     width: 100%;
-    height: 500px; /* 高度一定要给 */
+    height: 100%;
 }
 </style>
 </head>
 <body>
-<div id='container'></div>
+<div id="map-container">
+    <div id="container"></div>
+</div>
 
 <script>
     // 初始化地图
